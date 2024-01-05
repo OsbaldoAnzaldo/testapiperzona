@@ -302,6 +302,193 @@
                     }
                 ]
             }
+        },
+        "/api/titles": {
+            "post": {
+                "tags": [
+                    "Titles"
+                ],
+                "summary": "Crear title",
+                "description": "Se requiere name",
+                "operationId": "titles store",
+                "requestBody": {
+                    "description": "Valores",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "director_id": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Titanic"
+                                    },
+                                    "year": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "2023"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "datos incorrectos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validaciones": {
+                                            "type": "string",
+                                            "example": "validaciones"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/titles/id": {
+            "get": {
+                "tags": [
+                    "Titles"
+                ],
+                "summary": "Obtener title por id",
+                "description": "Se requiere id",
+                "operationId": "title get",
+                "requestBody": {
+                    "description": "Valores",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "director_id": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "1"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "Titanic"
+                                    },
+                                    "year": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "2023"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "datos incorrectos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Titles"
+                ],
+                "summary": "Editar title",
+                "description": "Se requiere name",
+                "operationId": "titles update",
+                "requestBody": {
+                    "description": "Valores",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "James Cameron"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "datos incorrectos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validaciones": {
+                                            "type": "string",
+                                            "example": "el nombre es requerido"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/titles/id": {
+            "delete": {
+                "tags": [
+                    "Titles"
+                ],
+                "summary": "eliminar titles por id",
+                "operationId": "delete title",
+                "responses": {
+                    "200": {
+                        "description": " registro eliminado."
+                    },
+                    "404": {
+                        "description": "no encontrrado."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
         }
     },
     "components": {
