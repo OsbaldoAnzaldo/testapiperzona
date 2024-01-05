@@ -8,30 +8,60 @@ use App\Http\Resources\DirectorCollection;
 use App\Models\Director;
 use F9Web\ApiResponseHelpers;
 
+
+
 class DirectorController extends Controller
 {
     use ApiResponseHelpers;
-    /**
-     * Display a listing of the resource.
-     */
 
+     /**
+     *  @OA\Get(
+     *      path="/directors",
+     *      summary="Obtener directores",
+     *      operationId="directors",
+     *      tags={"Directors"},
+     *      security={{"bearer_token":{}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description="listado de registros."
+     *      ),
+     *      @OA\Response(
+     *          response="500",
+     *          description="error en el servidor."
+     *      )
+     *  )
+     */
     public function index()
     {
         $directors = Director::all();
         return $this->respondWithSuccess($directors);
     }
 
-    /**
-     * Show the form for creating a new resource.
+        /**
+     * @OA\Post(
+     * path="/api/directors",
+     * summary="Crear director",
+     * description="Se requiere name",
+     * operationId="directors store",
+     * tags={"Directors"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Valores",
+     *    @OA\JsonContent(
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string", format="text", example="James Cameron"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="datos incorrectos",
+     *    @OA\JsonContent(
+     *          @OA\Property(property="validaciones", type="string", example="el nombre es requerido")
+     *        )
+     *     )
+     * )
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreDirectorRequest $request)
     {
         
@@ -40,8 +70,29 @@ class DirectorController extends Controller
         return $this->respondCreated($director);
     }
 
-    /**
-     * Display the specified resource.
+            /**
+     * @OA\GET(
+     * path="/api/directors/id",
+     * summary="Obtener director por id",
+     * description="Se requiere id",
+     * operationId="director get",
+     * tags={"Directors"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Valores",
+     *    @OA\JsonContent(
+     *       required={"id"},
+     *       @OA\Property(property="id", type="integer", format="number", example="1"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="datos incorrectos",
+     *    @OA\JsonContent(
+     *          @OA\Property(property="response", type="string", example="no encontrado")
+     *        )
+     *     )
+     * )
      */
     public function show($id)
     {
@@ -51,17 +102,31 @@ class DirectorController extends Controller
         return $this->respondWithSuccess($director);
     }
 
-    /**
-     * Show the form for editing the specified resource.
+        /**
+     * @OA\Put(
+     * path="/api/directors/id",
+     * summary="Editar director",
+     * description="Se requiere name y id",
+     * operationId="directors update",
+     * tags={"Directors"},
+     * @OA\RequestBody(
+     *    required=true,
+     *    description="Valores",
+     *    @OA\JsonContent(
+     *       required={"name"},
+     *       @OA\Property(property="name", type="string", format="text", example="James Cameron"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=422,
+     *    description="datos incorrectos",
+     *    @OA\JsonContent(
+     *          @OA\Property(property="validaciones", type="string", example="el nombre es requerido")
+     *        )
+     *     )
+     * )
      */
-    public function edit(Director $director)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateDirectorRequest $request, $id)
     {
         $director = Director::findOrFail($id);
@@ -70,9 +135,24 @@ class DirectorController extends Controller
         return $this->respondWithSuccess($director);
     }
 
-    /**
-     * Remove the specified resource from storage.
+     /**
+     *  @OA\Delete(
+     *      path="/directors/id",
+     *      summary="eliminar director por id",
+     *      operationId="delete director",
+     *      tags={"Directors"},
+     *      security={{"bearer_token":{}}},
+     *      @OA\Response(
+     *          response=200,
+     *          description=" registro eliminado."
+     *      ),
+     *      @OA\Response(
+     *          response="404",
+     *          description="no encontrrado."
+     *      )
+     *  )
      */
+
     public function destroy($id)
     {
         

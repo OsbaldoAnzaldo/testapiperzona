@@ -1,0 +1,317 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "TEST API PERZONA",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://testapi-perzona.test"
+        }
+    ],
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Iniciar Sesion",
+                "description": "Se requiere email y password",
+                "operationId": "login",
+                "requestBody": {
+                    "description": "Credenciales",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "admin@perzona.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "12345678"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "credenciales correctas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "8|Vno7VCA6gKJIo0hxhc5WlcCJpa3uuXHO2YO92zml68102b7a"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Logout"
+                ],
+                "summary": "Cerrar Sesion",
+                "operationId": "logout",
+                "responses": {
+                    "201": {
+                        "description": "respuesta",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Sesion cerrada correctamente"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/directors": {
+            "get": {
+                "tags": [
+                    "Directors"
+                ],
+                "summary": "Obtener directores",
+                "operationId": "directors",
+                "responses": {
+                    "200": {
+                        "description": "listado de registros."
+                    },
+                    "500": {
+                        "description": "error en el servidor."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/directors": {
+            "post": {
+                "tags": [
+                    "Directors"
+                ],
+                "summary": "Crear director",
+                "description": "Se requiere name",
+                "operationId": "directors store",
+                "requestBody": {
+                    "description": "Valores",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "James Cameron"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "datos incorrectos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validaciones": {
+                                            "type": "string",
+                                            "example": "el nombre es requerido"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/directors/id": {
+            "get": {
+                "tags": [
+                    "Directors"
+                ],
+                "summary": "Obtener director por id",
+                "description": "Se requiere id",
+                "operationId": "director get",
+                "requestBody": {
+                    "description": "Valores",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "number",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "datos incorrectos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "response": {
+                                            "type": "string",
+                                            "example": "no encontrado"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Directors"
+                ],
+                "summary": "Editar director",
+                "description": "Se requiere name y id",
+                "operationId": "directors update",
+                "requestBody": {
+                    "description": "Valores",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "format": "text",
+                                        "example": "James Cameron"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "422": {
+                        "description": "datos incorrectos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "validaciones": {
+                                            "type": "string",
+                                            "example": "el nombre es requerido"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/directors/id": {
+            "delete": {
+                "tags": [
+                    "Directors"
+                ],
+                "summary": "eliminar director por id",
+                "operationId": "delete director",
+                "responses": {
+                    "200": {
+                        "description": " registro eliminado."
+                    },
+                    "404": {
+                        "description": "no encontrrado."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/titles": {
+            "get": {
+                "tags": [
+                    "Titles"
+                ],
+                "summary": "Obtener titulos",
+                "operationId": "titles",
+                "responses": {
+                    "200": {
+                        "description": "listado de registros."
+                    },
+                    "500": {
+                        "description": "error en el servidor."
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    }
+}

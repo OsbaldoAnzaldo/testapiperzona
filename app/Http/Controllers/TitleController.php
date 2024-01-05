@@ -8,29 +8,35 @@ use App\Http\Resources\TitleCollection;
 use App\Models\Title;
 use F9Web\ApiResponseHelpers;
 
+
+
 class TitleController extends Controller
 {
     use ApiResponseHelpers;
     /**
-     * Display a listing of the resource.
-     */
+    *  @OA\Get(
+    *      path="/titles",
+    *      summary="Obtener titulos",
+    *      operationId="titles",
+    *      tags={"Titles"},
+    *      security={{"bearer_token":{}}},
+    *      @OA\Response(
+    *          response=200,
+    *          description="listado de registros."
+    *      ),
+    *      @OA\Response(
+    *          response="500",
+    *          description="error en el servidor."
+    *      )
+    *  )
+    */
+
     public function index()
     {
         $titles = Title::all();
         return $this->respondWithSuccess($titles);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreTitleRequest $request)
     {
         
@@ -39,9 +45,6 @@ class TitleController extends Controller
         return $this->respondCreated($title);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         
@@ -50,17 +53,6 @@ class TitleController extends Controller
         return $this->respondWithSuccess($title);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Title $title)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateTitleRequest $request, $id)
     {
         
@@ -70,11 +62,12 @@ class TitleController extends Controller
         return $this->respondWithSuccess($title);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Title $title)
+    public function destroy($id)
     {
-        //
+        
+        $title = Title::findOrFail($id);
+        $title->delete();
+
+        return $this->respondWithSuccess($title);
     }
 }
