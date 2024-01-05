@@ -3,9 +3,14 @@
 ## 1. Clonar repositorio
 
 ## 2. Configurar .env
+    
+## 3. Ejecuatar migraciones
+    php artisan migrate:fresh --seed
 
-## 3. Ruta Swagger
+## 4. Iniciar servidor
+    php artisan serve
+## 5. Ruta Swagger
 
-https://testapi-perzona.test/api/documentation
+127.0.0.1:8000/api/documentation
 
 
