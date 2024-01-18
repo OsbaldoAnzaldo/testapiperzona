@@ -14,6 +14,7 @@ class UserController extends Controller
 
     public function __construct(UserService $userService){
         $this->userService = $userService;
+        $this->encryptPassword = new EncryptPassword();
     }
     /**
      * Display a listing of the resource.
@@ -38,7 +39,7 @@ class UserController extends Controller
     {
         $name = $request->name;
         $email = $request->email;   
-        $password = $this->encryptPassword->encryptPassword($request->password);
+        $password = $this->encryptPassword->encrypt($request->password);
         return $this->userService->createUSer($name, $email, $password);
     }
 
