@@ -4,6 +4,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\TitleController;
 use App\Http\Controllers\UserController;
+use App\Builders\Computer;
+use App\Builders\Conceptual;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::apiResource('users',UserController::class);
+Route::get('/computer', [Computer::class, 'computer']);
+Route::get('/conceptual', [Conceptual::class, 'conceptual']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
